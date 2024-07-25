@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #FFFEF8;
 }
 ol, ul {
 	list-style: none;
@@ -217,6 +218,63 @@ input[type="submit"]{
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
 }
 
+/**** Login Page ****/
+.bold {
+	font-weight: 600;
+}
+li img {
+	width: 22px;
+	height: 22px;
+	cursor: pointer;
+}
+
+#login {
+	margin-bottom: auto;
+	padding: 200px 200px 0px 200px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+#login form {
+	display: flex;
+	flex-direction: column;
+	width: 397px;
+	gap: 15px;
+}
+#login label {
+	margin-top: 25px;
+}
+
+#login input {
+	background-color: #ffffff;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	height: 51px;
+	border: none;
+}
+#login button {
+	background-color: #1D6154;
+	color: #ffffff;
+	font-family: "Syne";
+	width: 179px;
+	height: 36px;
+	text-align: center;
+	margin: 37px auto 0 auto;
+	border-radius: 60px;
+	border: none;
+}
+
+#login button:hover {
+	cursor: pointer;
+}
+
+#login a {
+	color: #3D3D3D;
+	text-align: center;
+	margin-top: 25px;
+} 
