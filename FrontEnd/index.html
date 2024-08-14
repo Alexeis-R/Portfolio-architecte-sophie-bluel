@@ -9,7 +9,9 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<script src="https://kit.fontawesome.com/91f486346d.js" crossorigin="anonymous"></script>
 	<script src="./assets/script/index.js" defer></script>
+	<script src="./assets/script/modale.js" defer></script>
 </head>
 <body>
 <header>
@@ -36,14 +38,36 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="title-container">
+			<h2>Mes Projets</h2>
+			<i class="fa-regular fa-pen-to-square"></i>
+			<button class="edit_button" onclick="openModal()">Modifier</button>
+		</div>
 		<section id="filter-buttons">
-
 		</section>
 		<div class="gallery">
-			
 		</div>
 	</section>
+	<div class="overlay"></div>
+	<div class="modal">
+		<div class="modal_close" onclick="closeModal()">
+			<i class="fa-solid fa-x"></i>
+		</div>
+		<div class="modal_header">
+			<h2 class="modal_header_title">Galerie photo</h2>
+		</div>
+		<div class="modal_body">
+			<div class="modal_gallery">
+				<button class="delete-button" onclick="deleteImage(this)">
+					<i class="fa-solid fa-trash-can"></i>
+				</button>
+			</div>
+		</div>
+		<div class="modal_footer">
+			<div class="modal_footer_line"></div>
+			<button class="modal_footer_button">Ajouter une photo</button>
+		</div>
+	</div>
 	<section id="contact">
 		<h2>Contact</h2>
 		<p>Vous avez un projet ? Discutons-en !</p>
@@ -58,7 +82,6 @@
 		</form>
 	</section>
 </main>
-
 <footer>
 	<nav>
 		<ul>
