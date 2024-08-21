@@ -1,3 +1,6 @@
+const next = document.querySelector(".modal_footer_button")
+
+
 async function getWorks() {
     try {
         const response = await fetch("http://localhost:5678/api/works");
@@ -12,6 +15,7 @@ async function getWorks() {
     }
 }
 
+
 async function openModal() {
 
     document.querySelector(".modal").style.display = "block";
@@ -20,6 +24,19 @@ async function openModal() {
     const works = await getWorks();
     populateModal(works);
 
+}
+
+async function openModal2() {
+
+    document.querySelector(".modal_2").style.display ='block'
+    document.querySelector(".overlay").style.display = "block";
+    document.querySelector(".modal").style.display = "none";
+    document.querySelector(".overlay").style.display = "none";
+}
+
+async function returnModal() {
+    document.querySelector(".modal").style.display = "block";
+    document.querySelector(".modal_2").style.display = "none";
 }
 
 function populateModal(works) {
@@ -37,7 +54,7 @@ function populateModal(works) {
 
         workElement.innerHTML = `
             <img src="${work.imageUrl}" alt="${work.title}">
-
+            <i class="fa-solid fa-trash-can delete-icon"></i>
         `;
         gallery.appendChild(workElement);
     });
@@ -46,4 +63,5 @@ function populateModal(works) {
  async function closeModal() {
     document.querySelector('.modal').style.display = 'none';
     document.querySelector('.overlay').style.display = 'none';
-}
+    document.querySelector('.modal_2').style.display = 'none'
+};
