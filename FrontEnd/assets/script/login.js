@@ -32,6 +32,8 @@ document.getElementById('login-form').addEventListener('submit', async function(
 
         // Redirige vers la page d'accueil
         window.location.href = 'index.html';
+        document.getElementById("authButton").style.display ="none";
+
     } catch (error) {
         // Affiche un message d'erreur
         document.getElementById('error-message').style.display = 'block';
