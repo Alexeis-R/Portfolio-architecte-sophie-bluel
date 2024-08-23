@@ -54,10 +54,32 @@ function populateModal(works) {
 
         workElement.innerHTML = `
             <img src="${work.imageUrl}" alt="${work.title}">
-            <i class="fa-solid fa-trash-can delete-icon"></i>
+            <i class="fa-solid fa-trash-can delete-icon" id="delete" onclick="deleteImage()"></i>
         `;
         gallery.appendChild(workElement);
     });
+}
+
+async function deleteImage(work) {
+    const apiUrl = 'http://localhost:5678/api/works/';
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (response.ok) {
+            alert('Image supprimée avec succès');
+            document.getElementById(`image-${work.id}`).remove();
+        } else {
+            alert('Erreur lors de la suppression de l\'image');
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+    }
 }
 
  async function closeModal() {
@@ -65,3 +87,4 @@ function populateModal(works) {
     document.querySelector('.overlay').style.display = 'none';
     document.querySelector('.modal_2').style.display = 'none'
 };
+
