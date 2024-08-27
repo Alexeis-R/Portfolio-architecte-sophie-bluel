@@ -1,3 +1,27 @@
+document.addEventListener("DOMContentLoaded", function() {
+    // Récupère le token depuis le sessionStorage
+    const token = sessionStorage.getItem("authToken");
+
+    // Fonction qui vérifie si le token est valide
+    function isTokenValid(token) {
+        // On vérifie que le token existe et qu'il est égal à "validToken"
+        return token !== null && token === "validToken";
+    }
+
+    // Sélectionne l'élément avec l'ID "authButton"
+    const authButton = document.getElementById("authButton");
+
+    // Si le token est valide, change le texte en "Logout"
+    if (isTokenValid(token)) {
+        authButton.textContent = "Logout";
+    } else {
+        // Sinon, change le texte en "Login"
+        authButton.textContent = "Login";
+    }
+});
+
+
+
 // Fonction pour récupérer les catégories
 async function getCategories() {
     try {
@@ -37,6 +61,7 @@ function displayWorks(works) {
     works.forEach(work => {
         const workElement = document.createElement('div');
         workElement.classList.add('work-item');
+        workElement.id="vignette"+work.id;
         workElement.innerHTML = `
             <img src="${work.imageUrl}" alt="${work.title}">
             <p>${work.title}</p>
