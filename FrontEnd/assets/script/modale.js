@@ -51,29 +51,29 @@ function populateModal(works) {
     works.forEach(work => {
         const workElement = document.createElement("div");
         workElement.classList.add("project-item");
-
+        workElement.id="vignette"+work.id;
         workElement.innerHTML = `
             <img src="${work.imageUrl}" alt="${work.title}">
-            <i class="fa-solid fa-trash-can delete-icon" id="delete" onclick="deleteImage()"></i>
+            <i class="fa-solid fa-trash-can delete-icon" id="delete" onclick="deleteImage(${work.id})"></i>
         `;
         gallery.appendChild(workElement);
     });
 }
 
 async function deleteImage(work) {
-    const apiUrl = 'http://localhost:5678/api/works/';
+    const apiUrl = 'http://localhost:5678/api/works/'+work;
 
     try {
         const response = await fetch(apiUrl, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json',
+                Authorization: `Bearer ${window.sessionStorage.getItem("authToken")}`,
             }
         });
 
         if (response.ok) {
             alert('Image supprimée avec succès');
-            document.getElementById(`image-${work.id}`).remove();
+            document.getElementById(`vignette${work}`).remove();
         } else {
             alert('Erreur lors de la suppression de l\'image');
         }
