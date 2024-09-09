@@ -1,22 +1,26 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Récupère le token depuis le sessionStorage
+// Récupère le token depuis le sessionStorage
     const token = sessionStorage.getItem("authToken");
 
-    // Fonction qui vérifie si le token est valide
+// Fonction qui vérifie si le token est valide
     function isTokenValid(token) {
         // On vérifie que le token existe et qu'il est égal à "validToken"
         return token !== null && token === "validToken";
     }
 
-    // Sélectionne l'élément avec l'ID "authButton"
     const authButton = document.getElementById("authButton");
+    const filterButton = document.getElementById("filter-buttons");
+    const navBar = document.getElementById("navBar");
 
-    // Si le token est valide, change le texte en "Logout"
+// Si le token est valide, change le texte en "Login"
     if (isTokenValid(token)) {
-        authButton.textContent = "Logout";
-    } else {
-        // Sinon, change le texte en "Login"
         authButton.textContent = "Login";
+        navBar.style.display = "none";
+    } else {
+// Sinon, change le texte en "Logout"
+        authButton.textContent = "Logout";
+        filterButton.style.display = "none";    
+
     }
 });
 
@@ -30,7 +34,6 @@ async function getCategories() {
             throw new Error(`Erreur HTTP! statut : ${response.status}`);
         }
         const categories = await response.json();
-        console.log('Données des catégories :', categories);
         return categories;
     } catch (error) {
         console.error('Échec de la récupération des catégories :', error);
@@ -45,7 +48,6 @@ async function getWorks() {
             throw new Error(`Erreur HTTP! statut : ${response.status}`);
         }
         const works = await response.json();
-        console.log('Données des œuvres :', works);
         return works;
     } catch (error) {
         console.error('Échec de la récupération des œuvres :', error);
@@ -70,50 +72,44 @@ function displayWorks(works) {
     });
 }
 
-// Fonction pour afficher les catégories sur le site et appliquer les filtres
+// Fonction pour afficher les catégories et gérer les filtres
 async function displayCategories() {
-    // Récupère les catégories et les œuvres
     const categories = await getCategories();
     const works = await getWorks();
 
     if (categories && categories.length > 0) {
-        // Sélectionne l'élément HTML 
         const categoriesContainer = document.getElementById('filter-buttons');
 
-        // Crée et ajoute le bouton "Tous"
+// Ajoute un bouton "Tous" pour afficher toutes les œuvres
         const allButton = document.createElement('button');
         allButton.classList.add('btn', 'active');
         allButton.textContent = 'Tous';
         allButton.addEventListener('click', () => {
             document.querySelectorAll('#filter-buttons .btn').forEach(btn => btn.classList.remove('active'));
             allButton.classList.add('active');
-             // Affiche toutes les œuvres
             displayWorks(works);
         });
         categoriesContainer.appendChild(allButton);
 
-        // Affiche toutes les œuvres par défaut
         displayWorks(works);
 
-        // Parcourt les catégories et crée un élément HTML pour chacune
+// Crée un bouton pour chaque catégorie
         categories.forEach(category => {
             const categoryButton = document.createElement('button');
             categoryButton.classList.add('btn');
             categoryButton.textContent = category.name;
             categoryButton.addEventListener('click', () => {
-                // Filtre et affiche les œuvres par catégorie
                 document.querySelectorAll('#filter-buttons .btn').forEach(btn => btn.classList.remove('active'));
                 categoryButton.classList.add('active');
+// Filtre les œuvres en fonction de la catégorie sélectionnée
                 const filteredWorks = works.filter(work => work.categoryId === category.id);
-                 // Affiche les œuvres filtrées
                 displayWorks(filteredWorks);
             });
             categoriesContainer.appendChild(categoryButton);
         });
     } else {
-        console.log('Aucune catégorie trouvée.');
+        console.error('Aucune catégorie trouvée.');
     }
 }
-
-// Appelle la fonction pour afficher les catégories et les œuvres lorsque la page est chargée
+// Attendre que la page soit complètement chargée pour afficher les catégories et les œuvres
 document.addEventListener('DOMContentLoaded', displayCategories);
