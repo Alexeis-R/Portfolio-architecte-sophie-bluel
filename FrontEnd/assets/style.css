@@ -109,6 +109,22 @@ body {
   line-height: 1;
   background-color: #fffef8;
 }
+#navBar {
+  display: flex;
+  justify-content: center;
+  background-color: black;
+  height: 59px;
+  align-items: center;
+  width: 100%;
+  color: white;
+  gap: 10px;
+}
+.navbar-text {
+  font-size: 16px;
+}
+#pen{
+  cursor: pointer;
+}
 ol,
 ul {
   list-style: none;
@@ -517,15 +533,17 @@ li img {
 
 .modal_content {
   background-color: #fff;
-  padding-left: 105px;
-  padding-right: 105px;
-  border-radius: 8px;
-  text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 56px;
   align-items: center;
-  padding-top: 10px;
+  gap: 36px;
+}
+
+#uploadForm{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
 }
 
 .modal_content h2 {
@@ -551,7 +569,7 @@ li img {
   background: #E8F1F6;
   border-radius: 3px;
   padding-top: 13px;
-  padding-bottom: 31px;
+  padding-bottom: 19px;
   gap: 6px;
 }
 
@@ -560,6 +578,11 @@ li img {
   border-radius: 3px;
   color: #CBD6DC;
 }
+
+#input-file {
+  display: none;
+}
+
 .downlod_image p{
   font-size: 10px;
 }
@@ -574,9 +597,16 @@ li img {
     margin-top: 10px; 
 }
 
+#preview{
+  display: none;
+  width: 129px;
+  height: auto;
+}
+
 .modal_form{
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 .modal_form label {
   display:flex;
@@ -596,14 +626,21 @@ li img {
   box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
   border: none;
 }
-.button_valid{
+.button_valid {
+  background-color:#A7A7A7;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: not-allowed; /* Curseur désactivé */
   border: none;
-  background: #A7A7A7;
+  border-radius: 20px;
+  margin-top: 10px;
   width: 237px;
   height: 36px;
-  color: white;
-  border-radius: 60px;
-  margin: 2em auto;
+}
+
+.button_valid:enabled {
+  cursor: pointer; /* Curseur activé */
 }
 
 
