@@ -210,12 +210,23 @@ async function populateCategories() {
         if (response.ok) {
             const categories = await response.json();
             const categorySelect = document.getElementById('category');
+
+            // Ajouter une option vide par défaut
+            const emptyOption = document.createElement('option');
+            emptyOption.value = '';
+            emptyOption.textContent = '';
+            categorySelect.appendChild(emptyOption);
+
+            // Ajouter les catégories récupérées
             categories.forEach(category => {
                 const option = document.createElement('option');
                 option.value = category.id;
                 option.textContent = category.name;
                 categorySelect.appendChild(option);
             });
+
+  
+            categorySelect.value = '';
         } else {
             console.error('Erreur lors de la récupération des catégories');
         }

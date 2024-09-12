@@ -1,43 +1,37 @@
-// Ajoute un écouteur pour l'événement
+
 document.getElementById('login-form').addEventListener('submit', async function(event) {
-    // Empêche le rechargement de la page
     event.preventDefault();
 
-    // Récupère les valeurs des champs email et mot de passe
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
+    // Validation des champs
+    if (!email || !password) {
+        document.getElementById('error-message').textContent = 'Veuillez remplir tous les champs.';
+        document.getElementById('error-message').style.display = 'block';
+        return;
+    }
+
     try {
-        // Envoie une requête POST à l'API de connexion
         const response = await fetch('http://localhost:5678/api/users/login', {
-            // Utilise la méthode POST
-            method: 'POST', 
+            method: 'POST',
             headers: {
-                // Indique que le corps de la requête est en JSON
-                'Content-Type': 'application/json' 
+                'Content-Type': 'application/json'
             },
-            // Convertit les données en JSON
-            body: JSON.stringify({ email, password }) 
+            body: JSON.stringify({ email, password })
         });
 
-        // Si la réponse n'est pas OK, lance une erreur
         if (!response.ok) {
             throw new Error('E-mail ou mot de passe incorrect.');
         }
 
-        // Analyse la réponse JSON
         const data = await response.json();
-        // Stocke le token d'authentification
         sessionStorage.setItem('authToken', data.token);
-
-        // Redirige vers la page d'accueil
         window.location.href = 'index.html';
-        document.getElementById("authButton").style.display ="none";
 
     } catch (error) {
-        // Affiche un message d'erreur
+        document.getElementById('error-message').textContent = 'Erreur lors de la connexion. Veuillez réessayer.';
         document.getElementById('error-message').style.display = 'block';
-        // Affiche l'erreur dans la console
         console.error('Erreur lors de la connexion:', error);
     }
 });

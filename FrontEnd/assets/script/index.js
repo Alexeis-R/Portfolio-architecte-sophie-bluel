@@ -1,30 +1,48 @@
 document.addEventListener("DOMContentLoaded", function() {
-// Récupère le token depuis le sessionStorage
     const token = sessionStorage.getItem("authToken");
 
-// Fonction qui vérifie si le token est valide
     function isTokenValid(token) {
-        // On vérifie que le token existe et qu'il est égal à "validToken"
-        return token !== null && token === "validToken";
+        return token !== null && token !== "";
     }
 
     const authButton = document.getElementById("authButton");
     const filterButton = document.getElementById("filter-buttons");
     const navBar = document.getElementById("navBar");
+    const editButton = document.getElementById("edit-button");
+    const loginButton = document.getElementById("authButton"); 
 
-// Si le token est valide, change le texte en "Login"
-    if (isTokenValid(token)) {
-        authButton.textContent = "Login";
-        navBar.style.display = "none";
+    if (authButton && filterButton && navBar) {
+        if (isTokenValid(token)) {
+            authButton.textContent = "Logout";
+            navBar.style.display = "flex";
+            filterButton.style.display = "none";
+            editButton.style.display = "flex";
+        } else {
+            authButton.textContent = "Login";
+            filterButton.style.display = "flex";
+            navBar.style.display = "none";
+        }
     } else {
-// Sinon, change le texte en "Logout"
-        authButton.textContent = "Logout";
-        filterButton.style.display = "none";    
+        console.error("Erreur: Un ou plusieurs éléments sont introuvables.");
+    }
 
+    // Ajoutez l'écouteur d'événement pour le bouton login
+    if (loginButton) {
+        loginButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (!isTokenValid(token)) {
+                window.location.href = "login.html"; // Redirige vers la page de connexion
+            } else {
+                sessionStorage.removeItem("authToken");
+                window.location.reload();
+            }
+        });
+    } else {
+        console.error("Erreur: Le bouton login est introuvable.");
     }
 });
 
-
+displayCategories();
 
 // Fonction pour récupérer les catégories
 async function getCategories() {
@@ -111,5 +129,3 @@ async function displayCategories() {
         console.error('Aucune catégorie trouvée.');
     }
 }
-// Attendre que la page soit complètement chargée pour afficher les catégories et les œuvres
-document.addEventListener('DOMContentLoaded', displayCategories);
